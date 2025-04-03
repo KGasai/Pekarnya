@@ -10,13 +10,14 @@ class Main extends CI_Controller {
 			$this->load->view('templates/navbar_technologist.php');
 		} else if ($this->session->userdata('role') == 'expeditor') {
 			$this->load->view('templates/navbar_expeditor.php');
-		} else if ($this->session->userdata('role') == 'owner') {
+		} else if ($this->session->userdata('role') == 'director') {
 			$this->load->view('templates/navbar_owner.php');
 		} else if ($this->session->userdata('role') == 'storekeeper') {
 			$this->load->view('templates/navbar_storekeeper.php');
 		} else {
 			$this->load->view('templates/navbar.php');
 		}
+
 		$this->load->view('view_index.php');
 		$this->load->view('templates/footer.php');
 	}
@@ -32,10 +33,10 @@ class Main extends CI_Controller {
 		if(!empty(($_POST))){
 			$username = $_POST['username'];
 			$password = $_POST['password'];
-			$this -> load->model('user');
-			$data = $this -> user -> login( $username, $password )[0];
+			$this -> load->model('User_model');
+			$data = $this -> User_model -> login( $username, $password );
 			if($data){
-				$this->session->set_flashdata('role',$data['role']);
+				$this->session->set_userdata('role',$data['role']);
 				redirect('Main/index');
 			}else{
 				echo "Неверный логин или пароль";
