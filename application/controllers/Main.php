@@ -19,7 +19,7 @@ class Main extends CI_Controller {
 		} else {
 			$this->load->view('templates/navbar.php');
 		}
-
+		echo($this->session->userdata('role'));
 		$this->load->view('view_index.php');
 		$this->load->view('templates/footer.php');
 	}
