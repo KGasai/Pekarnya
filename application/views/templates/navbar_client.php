@@ -10,14 +10,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="Main/index">Главная</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Main/index">Личный кабинет</a>
+                </li>
             </ul>
 
             <ul class="navbar-nav me-4 ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="Main/login">Авторизация</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Main/register">Регистрация</a>
+                    <a class="nav-link" href="main/logout">Выйти</a>
                 </li>
             </ul>
         </div>

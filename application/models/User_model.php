@@ -31,6 +31,14 @@ class User_model extends CI_Model {
         return $query->row_array();
     }
 
+    // Получение пользователя по username и паролю
+    public function get_user_by_username_and_password($username, $password) {
+        $this->db->where('username', $username);
+        $this->db->where('password', $password);
+        $query = $this->db->get('Users');
+        return $query->row_array();
+    }
+
     // Получение пользователей по роли
     public function get_users_by_role($role) {
         $this->db->where('role', $role);
