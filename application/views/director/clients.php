@@ -1,5 +1,5 @@
 <div class="container">
-    <h2 class="mb-4">Список клиентов на <?= date('d.m.Y') ?></h2>
+    <h2 class="mb-4">Список клиентов </h2>
     
     <div class="text-right mb-3">
         <button class="btn btn-primary" onclick="window.print()">

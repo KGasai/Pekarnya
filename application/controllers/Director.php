@@ -64,20 +64,34 @@ class Director extends CI_Controller {
     }
 
     // Заявки клиента
-    public function client_orders($client_id = null, $start_date = null, $end_date = null) {
+
+    public function client_orders($start_date = null, $end_date = null) {
         $this->load->model('Order_model');
         $this->load->model('Client_model');
+        $this->load->model('Contract_model');
     
-        // Если client_id не передан, перенаправить на список клиентов
-        if ($client_id === null) {
-            redirect('director/clients');
-        }
-    
+        // Устанавливаем даты по умолчанию (текущий месяц)
         $start_date = $start_date ?? date('Y-m-01');
         $end_date = $end_date ?? date('Y-m-d');
         
-        $data['orders'] = $this->Order_model->get_client_orders($client_id, $start_date, $end_date);
-        $data['client'] = $this->Client_model->get_client($client_id);
+        // Получаем всех клиентов
+        $clients = $this->Client_model->get_all_clients();
+        
+        // Для каждого клиента получаем заказы и контракты
+        $data['client_orders'] = [];
+        foreach ($clients as $client) {
+            $orders = $this->Order_model->get_client_orders($client->user_id, $start_date, $end_date);
+            $contracts = $this->Contract_model->get_client_contracts($client->user_id);
+            
+            if (!empty($orders)) {
+                $data['client_orders'][] = [
+                    'client' => $client,
+                    'orders' => $orders,
+                    'contracts' => $contracts
+                ];
+            }
+        }
+        
         $data['start_date'] = $start_date;
         $data['end_date'] = $end_date;
     

@@ -3,10 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Report_model extends CI_Model {
 
-    public function __construct() {
-        parent::__construct();
-    }
-
     // Получение отчета о расходе сырья
     public function get_ingredient_consumption($start_date, $end_date) {
         $this->db->where('date >=', $start_date);

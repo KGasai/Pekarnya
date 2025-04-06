@@ -27,8 +27,7 @@ class Contract_model extends CI_Model {
     public function get_client_contracts($client_id) {
         $this->db->where('client_id', $client_id);
         $this->db->where('is_active', 1);
-        $query = $this->db->get('Contracts');
-        return $query->result_array();
+        return $this->db->get('Contracts')->result();
     }
 
     // Создание нового договора

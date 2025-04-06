@@ -63,17 +63,18 @@ class Order_model extends CI_Model {
 
     // Получение заказов клиента за период
     public function get_client_orders($client_id, $start_date, $end_date) {
+        $this->db->select('Orders.*');
+        $this->db->from('Orders');
         $this->db->where('client_id', $client_id);
         $this->db->where('order_date >=', $start_date);
         $this->db->where('order_date <=', $end_date);
-        $this->db->where('Orders.status !=', 'canceled');
-        $this->db->join('OrderItems', 'OrderItems.order_id = Orders.order_id');
-        $this->db->join('Products', 'Products.product_id = OrderItems.product_id');
-        $this->db->select('Orders.*, OrderItems.*, Products.name as product_name, Products.unit_of_measure, (OrderItems.quantity * OrderItems.price) as total');
-        $this->db->order_by('order_date', 'ASC');
-        $query = $this->db->get('Orders');
+        $orders = $this->db->get()->result();
         
-        return $query->result_array();
+        foreach ($orders as $order) {
+            $order->items = $this->get_order_items($order->order_id);
+        }
+        
+        return $orders;
     }
 
     // Обновление статуса заказа
@@ -90,13 +91,14 @@ class Order_model extends CI_Model {
         $query = $this->db->get('Orders');
         return $query->row_array();
     }
-
+    
     // Получение позиций заказа
     public function get_order_items($order_id) {
-        $this->db->where('order_id', $order_id);
+        $this->db->select('OrderItems.*, Products.name as product_name, Products.unit_of_measure');
+        $this->db->from('OrderItems');
         $this->db->join('Products', 'Products.product_id = OrderItems.product_id');
-        $query = $this->db->get('OrderItems');
-        return $query->result_array();
+        $this->db->where('order_id', $order_id);
+        return $this->db->get()->result();
     }
 }
 ?>
