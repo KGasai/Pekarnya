@@ -87,5 +87,23 @@ class Expeditor extends CI_Controller {
         
         return $prefix . str_pad($next_number, 4, '0', STR_PAD_LEFT);
     }
+
+    public function search_waybills() {
+        $this->load->model('Delivery_model');
+        
+        $start_date = $this->input->get('start_date') ?? date('Y-m-01');
+        $end_date = $this->input->get('end_date') ?? date('Y-m-d');
+        $status = $this->input->get('status') ?? null;
+        
+        $data['waybills'] = $this->Delivery_model->search_waybills($start_date, $end_date, $status);
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
+        $data['status'] = $status;
+        
+        $this->load->view('templates/head');
+        $this->load->view('templates/navbar_expeditor');
+        $this->load->view('expeditor/search_results', $data);
+        $this->load->view('templates/footer');
+    }
 }
 ?>

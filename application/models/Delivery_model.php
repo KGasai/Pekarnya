@@ -73,5 +73,22 @@ class Delivery_model extends CI_Model {
         $this->db->where('waybill_id', $waybill_id);
         return $this->db->update('Waybills', array($field => $time));
     }
+
+     // Поиск накладных
+    public function search_waybills($start_date, $end_date, $status = null) {
+        $this->db->select('*');
+        $this->db->from('Waybills');
+        $this->db->where('date >=', $start_date);
+        $this->db->where('date <=', $end_date);
+        
+        if ($status) {
+            $this->db->where('status', $status);
+        }
+        
+        $this->db->order_by('date', 'DESC');
+        $this->db->order_by('waybill_number', 'DESC');
+        
+        return $this->db->get()->result_array();
+    }
 }
 ?>
