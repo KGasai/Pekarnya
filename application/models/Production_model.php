@@ -22,12 +22,13 @@ class Production_model extends CI_Model {
         $task_id = $this->db->insert_id();
         
         // Добавляем позиции задания
-        foreach ($products as $product_id => $quantity) {
-            if ($quantity > 0) {
+        
+        foreach ($products as $product) {
+            if ($product['quantity'] > 0) {
                 $this->db->insert('ProductionTaskItems', array(
                     'task_id' => $task_id,
-                    'product_id' => $product_id,
-                    'quantity' => $quantity
+                    'product_id' => $product['product_id'],
+                    'quantity' => $product['quantity']
                 ));
             }
         }
@@ -37,15 +38,12 @@ class Production_model extends CI_Model {
         return $this->db->trans_status() ? $task_id : false;
     }
 
-    // Получение задания по ID
     public function get_task($task_id) {
         $this->db->where('task_id', $task_id);
-        $this->db->join('Users', 'Users.user_id = ProductionTasks.created_by');
         $query = $this->db->get('ProductionTasks');
         return $query->row_array();
     }
-
-    // Получение позиций задания
+    
     public function get_task_items($task_id) {
         $this->db->where('task_id', $task_id);
         $this->db->join('Products', 'Products.product_id = ProductionTaskItems.product_id');

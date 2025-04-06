@@ -44,6 +44,9 @@ class Main extends CI_Controller {
 				if($data['role'] == 'client'){
 					redirect('Client/index');
 				}
+				if($data['role'] == 'technologist'){
+					redirect('Technolog/index');
+				}
 				redirect('Main/index');
 			}else{
 				echo "Неверный логин или пароль";

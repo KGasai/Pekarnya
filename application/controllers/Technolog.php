@@ -3,5 +3,187 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Technolog extends CI_Controller {
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('Product_model');
+		$this->load->model('Recipe_model');
+		$this->load->model('Order_model');
+		$this->load->model('Production_model');
+		$this->load->model('Ingredient_model');
+	}
+
+    public function index()
+	{ 
+		$data['tasks'] = $this->Production_model->get_tasks_by_date(date('Y-m-d'));
+        $this->load->view('templates/head.php');
+		
+		$this->load->view('templates/navbar_technolog.php', $data);
+		
+
+		$this->load->view('view_index.php');
+		$this->load->view('templates/footer.php');
+       
+	}
+
 	
+    public function tasks()
+	{ 
+		
+
+
+		$data['tasks'] = $this->Production_model->get_tasks_by_date(date('Y-m-d'));
+		$data['products'] = $this->Product_model->get_active_products();
+
+        $this->load->view('templates/head.php');
+		
+		$this->load->view('templates/navbar_technolog.php', $data);
+		
+
+		$this->load->view('technolog/view_tasks.php');
+		$this->load->view('templates/footer.php');
+       
+	}
+	
+	public function recipes(){
+		$this->load->view('templates/head.php');
+		$data['products'] = $this->Product_model->get_active_products();
+		$data['ingredients'] = $this->Ingredient_model->get_active_ingredients();
+		$data['categories'] = $this->Product_model->get_categories();
+		
+		$this->load->view('templates/navbar_technolog.php');
+		
+		$this->load->view('technolog/view_recipes.php', $data);
+		$this->load->view('templates/footer.php');
+	}
+
+	// AJAX метод для получения рецепта
+public function get_recipe($product_id) {
+    $this->load->model('Recipe_model');
+    $recipe = $this->Recipe_model->get_recipe_by_product($product_id);
+    echo json_encode($recipe);
+}
+
+// AJAX метод для добавления ингредиента
+public function add_ingredient() {
+    $this->load->model('Recipe_model');
+    
+    $product_id = $this->input->post('product_id');
+    $ingredient_id = $this->input->post('ingredient_id');
+    $quantity = $this->input->post('quantity');
+    
+    $result = $this->Recipe_model->add_ingredient_to_recipe($product_id, $ingredient_id, $quantity);
+    
+    echo json_encode(['success' => $result]);
+}
+
+public function add_product(){
+	
+	$this->load->model('Product_model');
+	$result = $this->Product_model->add_product($_POST);
+    
+    echo json_encode(['success' => $result]);
+
+}
+
+// AJAX метод для удаления ингредиента
+public function remove_ingredient($recipe_id) {
+    $this->load->model('Recipe_model');
+    $result = $this->Recipe_model->remove_ingredient_from_recipe($recipe_id);
+    
+    echo json_encode(['success' => $result]);
+}
+	public function calculation(){
+		$this->load->view('templates/head.php');
+		
+		$this->load->view('templates/navbar_technolog.php');
+		
+
+		$this->load->view('technolog/view_calculation.php');
+		$this->load->view('templates/footer.php');
+	}
+
+	public function create_task() {
+		
+		$date = $_POST['date'];
+		$products = $_POST['products'];
+		$created_by = $this->session->userdata('userdata')['user_id'];
+		
+		if (is_string($products)) {
+			$products = json_decode($products, true);
+		}
+		
+		
+
+		$this->load->model('Production_model');
+		
+		$task_id = $this->Production_model->create_task($date, $created_by, $products);
+		
+		if ($task_id) {
+			echo json_encode(['success' => true, 'task_id' => $task_id]);
+		} else {
+			echo json_encode(['success' => false, 'message' => 'Ошибка создания задания']);
+		}
+	}
+
+	public function orders(){
+		$this->load->view('templates/head.php');
+		
+		$this->load->view('templates/navbar_technolog.php');
+		
+
+		$this->load->view('technolog/view_orders.php');
+		$this->load->view('templates/footer.php');
+	}
+	public function get_task_details() {
+		$task_id = $_GET['task_id'];
+		
+		$this->load->model('Production_model');
+		
+		$task = $this->Production_model->get_task($task_id);
+		
+		if (!$task) {
+			echo json_encode(['success' => false, 'message' => 'Задание не найдено']);
+			return;
+		}
+		
+		$task['task_date_formatted'] = date('d.m.Y', strtotime($task['task_date']));
+		
+		// Получаем информацию о создателе
+		$this->load->model('User_model');
+		$user = $this->User_model->get_user($task['created_by']);
+		$task['created_by_name'] = $user ? $user['full_name'] : 'Неизвестно';
+		
+		$products = $this->Production_model->get_task_items($task_id);
+		
+		// Рассчитываем требуемые ингредиенты
+		$ingredients = [];
+		$this->load->model('Recipe_model');
+		
+		foreach ($products as $product) {
+			$recipe = $this->Recipe_model->get_recipe_by_product($product['product_id']);
+			
+			foreach ($recipe as $item) {
+				$ingredient_id = $item['ingredient_id'];
+				
+				if (!isset($ingredients[$ingredient_id])) {
+					$ingredients[$ingredient_id] = [
+						'name' => $item['name'],
+						'unit_of_measure' => $item['unit_of_measure'],
+						'required_quantity' => 0
+					];
+				}
+				
+				$ingredients[$ingredient_id]['required_quantity'] += $item['quantity'] * $product['quantity'];
+			}
+		}
+		
+		
+		echo json_encode([
+			'success' => true,
+			'task' => $task,
+			'products' => $products,
+			'ingredients' => array_values($ingredients)
+		]);
+	}
 }
