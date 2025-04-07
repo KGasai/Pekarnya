@@ -3,10 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Contract_model extends CI_Model {
 
-    public function __construct() {
-        parent::__construct();
-    }
-
     // Получение всех активных договоров
     public function get_active_contracts() {
         $this->db->where('is_active', 1);
