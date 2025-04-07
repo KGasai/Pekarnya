@@ -42,7 +42,7 @@ class Order_model extends CI_Model {
         $this->db->join('OrderItems', 'OrderItems.order_id = Orders.order_id');
         $this->db->join('Products', 'Products.product_id = OrderItems.product_id');
         $this->db->join('Users', 'Users.user_id = Orders.client_id');
-        $this->db->select('Orders.*, OrderItems.*, Products.name as product_name, Products.unit_of_measure, Users.name as client_name');
+        $this->db->select('Orders.*, OrderItems.*, Products.name as product_name, Products.unit_of_measure, Users.full_name as client_name');
         $query = $this->db->get('Orders');
         
         return $query->result_array();

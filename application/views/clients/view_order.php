@@ -9,7 +9,7 @@
     </select>
 </div>
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Дата заказа</label>
+    <label for="exampleInputEmail1" class="form-label">Дата и время заказа</label>
     <input type="date" name="order_date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
   </div>
 

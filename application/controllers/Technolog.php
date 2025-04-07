@@ -86,7 +86,6 @@ public function add_product(){
 
 }
 
-// AJAX метод для удаления ингредиента
 public function remove_ingredient($recipe_id) {
     $this->load->model('Recipe_model');
     $result = $this->Recipe_model->remove_ingredient_from_recipe($recipe_id);
@@ -94,14 +93,36 @@ public function remove_ingredient($recipe_id) {
     echo json_encode(['success' => $result]);
 }
 	public function calculation(){
+		$this->load->model('Product_model');
+		$this->load->model('Ingredient_model');
+
+		$data['products'] = $this->Product_model->get_active_products();
+		$data['ingredients'] = $this->Ingredient_model->get_active_ingredients();
+
 		$this->load->view('templates/head.php');
 		
 		$this->load->view('templates/navbar_technolog.php');
 		
 
-		$this->load->view('technolog/view_calculation.php');
+		$this->load->view('technolog/view_calculation.php', $data);
 		$this->load->view('templates/footer.php');
 	}
+
+	// AJAX метод для расчета
+public function calculate_requirements() {
+    $this->load->model('Recipe_model');
+    
+    $products = $this->input->post('products');
+    
+    // Преобразуем JSON строку в массив, если нужно
+    if (is_string($products)) {
+        $products = json_decode($products, true);
+    }
+    
+    $result = $this->Recipe_model->calculate_daily_ingredients($products);
+    
+    echo json_encode($result);
+}
 
 	public function create_task() {
 		
@@ -127,13 +148,79 @@ public function remove_ingredient($recipe_id) {
 	}
 
 	public function orders(){
+		$this->load->model('Order_model');
+
+		$row_orders = $this->Order_model->get_orders_by_date(date('Y-m-d'));
+		$orders = [];
+		foreach ($row_orders as $item) {
+			$order_id = $item['order_id'];
+			
+			if (!isset($orders[$order_id])) {
+				$orders[$order_id] = [
+					'order_id' => $item['order_id'],
+					'client_id' => $item['client_id'],
+					'contract_id' => $item['contract_id'],
+					'order_date' => $item['order_date'],
+					'status' => $item['status'],
+					'notes' => $item['notes'],
+					'client_name' => $item['client_name'],
+					'items' => [],
+					'total' => 0
+				];
+			}
+			
+			$orders[$order_id]['items'][] = [
+				'order_item_id' => $item['order_item_id'],
+				'product_id' => $item['product_id'],
+				'product_name' => $item['product_name'],
+				'unit_of_measure' => $item['unit_of_measure'],
+				'quantity' => $item['quantity'],
+				'price' => $item['price']
+			];
+			
+			$orders[$order_id]['total'] += $item['quantity'] * $item['price'];
+		}
+		$data['orders'] = array_values($orders);
+
+
+
 		$this->load->view('templates/head.php');
 		
 		$this->load->view('templates/navbar_technolog.php');
 		
 
-		$this->load->view('technolog/view_orders.php');
+		$this->load->view('technolog/view_orders.php',$data);
 		$this->load->view('templates/footer.php');
+	}
+
+
+	public function get_order_details($order_id) {
+		$this->load->model('Order_model');
+		
+		$order = $this->Order_model->get_order($order_id);
+		
+		if (!$order) {
+			echo json_encode(['success' => false, 'message' => 'Заказ не найден']);
+			return;
+		}
+		
+		// Получаем товары в заказе
+		$items = $this->Order_model->get_order_items($order_id);
+		
+		echo json_encode([
+			'success' => true,
+			'order' => $order,
+			'items' => $items
+		]);
+	}
+
+	public function update_order_status($order_id) {
+		$this->load->model('Order_model');
+		
+		$status = $this->input->post('status');
+		$result = $this->Order_model->update_order_status($order_id, $status);
+		
+		echo json_encode(['success' => $result]);
 	}
 	public function get_task_details() {
 		$task_id = $_GET['task_id'];
@@ -176,8 +263,7 @@ public function remove_ingredient($recipe_id) {
 				
 				$ingredients[$ingredient_id]['required_quantity'] += $item['quantity'] * $product['quantity'];
 			}
-		}
-		
+		}		
 		
 		echo json_encode([
 			'success' => true,
