@@ -89,6 +89,15 @@ class Main extends CI_Controller {
 		}
 	}
 
+	public function doOrder(){
+		$this -> load->model('Contract_model');
+		$data['contracts'] = $this -> Contract_model -> get_contract($this -> session -> userdata['user_id']);
+		var_dump($data['contracts'] );
+		$this->load->view('templates/head');
+		$this->load->view('templates/navbar_client');
+		$this->load->view('view_order', $data);
+		$this->load->view('templates/footer');
+	}
 	public function order(){
 		if(isset(($_POST))){
 			$product_id = $_POST["product_id"];
@@ -97,20 +106,16 @@ class Main extends CI_Controller {
 			$delivery_terms = $_POST["delivery_terms"];
 			$payment_terms = $_POST["payment_terms"];
 
-			$this -> load->model('create_contract');
+			$this -> load->model('Order_model');
 			$contract = array(
 				'client_id' => $this->session->userdata('user_id'),
 				'start_date' => $start_date,
 				'start_date' => $end_date,
 				'delivery_terms' => $delivery_terms,
 				'payment_terms' => $payment_terms,
+				'product_id' => $product_id,
 );
-			$this -> Order_model -> create_order($contract );
-
-			$this -> load->model('Order_model');
-
-			$this -> Order_model -> create_order( );
-
+			$this -> Order_model -> create_order($contract);
 		}
 	}
 	public function logout(){

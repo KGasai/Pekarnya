@@ -3,10 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Order_model extends CI_Model {
     // Создание заказа
-    public function create_order($client_id, $contract_id, $order_date, $items, $notes = null) {
-        $this->db->trans_start();
+    public function create_order($client_id, $contract_id, $product_id, $order_date, $notes, $quantity,$price = null) {
         
-        // Создаем заказ
         $order_data = array(
             'client_id' => $client_id,
             'contract_id' => $contract_id,
@@ -18,21 +16,14 @@ class Order_model extends CI_Model {
         $this->db->insert('Orders', $order_data);
         $order_id = $this->db->insert_id();
         
-        // Добавляем позиции заказа
-        foreach ($items as $item) {
-            $order_item = array(
+        $order_item = array(
                 'order_id' => $order_id,
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price']
-            );
+                'product_id' => $product_id,
+                'quantity' => $quantity,
+                'price' => $price, );
             
             $this->db->insert('OrderItems', $order_item);
-        }
         
-        $this->db->trans_complete();
-        
-        return $this->db->trans_status() ? $order_id : false;
     }
 
     // Получение заказов на дату

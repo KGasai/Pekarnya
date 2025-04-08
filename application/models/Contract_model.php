@@ -6,7 +6,6 @@ class Contract_model extends CI_Model {
     // Получение всех активных договоров
     public function get_active_contracts() {
         $this->db->where('is_active', 1);
-        $this->db->join('Users', 'Users.user_id = Contracts.client_id');
         $query = $this->db->get('Contracts');
         return $query->result_array();
     }
