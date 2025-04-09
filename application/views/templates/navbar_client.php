@@ -7,21 +7,30 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-4 me-auto mb-lg-0">
+<<<<<<< HEAD
+                 <li class="nav-item">
+                    <a class="nav-link" href="Client/index">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Client/orders">Заказы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Client/contracts">Договоры</a>
+                </li>   
+=======
                 <li class="nav-item">
                     <a class="nav-link" href="Main/index">Главная</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Main/index">Личный кабинет</a>
+                </li>
+>>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
             </ul>
 
             <ul class="navbar-nav me-4 ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="Main/login">Авторизация</a>
+                    <a class="nav-link" href="main/logout">Выйти</a>
                 </li>
-<<<<<<< HEAD
-=======
-                <li class="nav-item">
-                    <a class="nav-link" href="Main/register">Регистрация</a>
-                </li>
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
             </ul>
         </div>
     </div>
