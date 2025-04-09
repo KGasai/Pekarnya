@@ -70,10 +70,16 @@ class Main extends CI_Controller {
 				if($data['role'] == 'technologist'){
 					redirect('Technolog/index');
 				}
+<<<<<<< HEAD
 =======
 				$this->session->set_userdata('role',$data['role']);
 				$this->session->set_userdata('user_id',$data['user_id']);
 >>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
+=======
+				if($data['role'] == 'storekeeper'){
+					redirect('Storekeeper/index');
+				}
+>>>>>>> storekeeper
 				redirect('Main/index');
 			}else{
 				echo "Неверный логин или пароль";

@@ -15,6 +15,13 @@ class Recipe_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function get_receipts() {
+        $this->db->select('ir.*');
+        $this->db->from('IngredientReceipts ir');
+        $this->db->order_by('ir.date', 'DESC');
+        return $this->db->get()->result_array();
+    }
+
     // Расчет ингредиентов для конкретного продукта и количества
     public function calculate_ingredients($product_id, $quantity) {
         $recipe = $this->get_recipe_by_product($product_id);
@@ -62,6 +69,24 @@ class Recipe_model extends CI_Model {
         return $this->db->insert('Recipes', $data);
     }
 
+    public function create_receipt($data) {
+        return $this->db->insert('IngredientReceipts', $data) ? $this->db->insert_id() : false;
+    }
+    public function add_receipt_item($receipt_id, $ingredient_id, $quantity, $cost_per_unit, $total_cost) {
+        $data = array(
+            'receipt_id' => $receipt_id,
+            'ingredient_id' => $ingredient_id,
+            'quantity' => $quantity,
+            'cost_per_unit' => $cost_per_unit,
+            'total_cost' => $total_cost
+        );
+        
+        return $this->db->insert('IngredientReceiptItems', $data);
+    }
+    public function update_receipt_total($receipt_id, $total_cost) {
+        $this->db->where('receipt_id', $receipt_id);
+        return $this->db->update('IngredientReceipts', array('total_cost' => $total_cost));
+    }
     // Удаление ингредиента из рецептуры
     public function remove_ingredient_from_recipe($recipe_id) {
         $this->db->where('recipe_id', $recipe_id);

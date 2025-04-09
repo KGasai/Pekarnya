@@ -7,6 +7,11 @@ class Ingredient_model extends CI_Model {
         parent::__construct();
     }
 
+     // Добавление нового ингредиента
+     public function add_ingredient($data) {
+        return $this->db->insert('Ingredients', $data);
+    }
+
     // Получение всех активных ингредиентов
     public function get_active_ingredients() {
         $this->db->where('is_active', 1);
@@ -108,6 +113,26 @@ class Ingredient_model extends CI_Model {
         );
         
         return $this->db->insert('IngredientPurchaseRequests', $data);
+    }
+     // Уменьшение остатков
+     public function reduce_stock($ingredient_id, $quantity) {
+        $this->db->set('current_stock', 'current_stock - ' . $quantity, FALSE);
+        $this->db->where('ingredient_id', $ingredient_id);
+        $this->db->where('current_stock >=', $quantity); // Проверка, чтобы не уйти в минус
+        return $this->db->update('Ingredients');
+    }
+// Увелечение остатков
+    public function reduce_stock_v($ingredient_id, $quantity) {
+        
+        $this->db->set('current_stock', 'current_stock + ' . $quantity, FALSE);
+        $this->db->where('ingredient_id', $ingredient_id);
+        return $this->db->update('Ingredients');
+    }
+
+    public function increase_stock($ingredient_id, $quantity) {
+        $this->db->set('current_stock', 'current_stock + ' . $quantity, FALSE);
+        $this->db->where('ingredient_id', $ingredient_id);
+        return $this->db->update('Ingredients');
     }
 }
 ?>
