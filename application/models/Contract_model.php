@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Contract_model extends CI_Model {
 
+<<<<<<< HEAD
     public function __construct() {
         parent::__construct();
     }
@@ -11,6 +12,11 @@ class Contract_model extends CI_Model {
     public function get_active_contracts() {
         $this->db->where('is_active', 1);
         $this->db->join('Users', 'Users.user_id = Contracts.client_id');
+=======
+    // Получение всех активных договоров
+    public function get_active_contracts() {
+        $this->db->where('is_active', 1);
+>>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
         $query = $this->db->get('Contracts');
         return $query->result_array();
     }
@@ -27,13 +33,20 @@ class Contract_model extends CI_Model {
     public function get_client_contracts($client_id) {
         $this->db->where('client_id', $client_id);
         $this->db->where('is_active', 1);
+<<<<<<< HEAD
         $query = $this->db->get('Contracts');
         return $query->result_array();
+=======
+        return $this->db->get('Contracts')->result();
+>>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
     }
 
     // Создание нового договора
     public function create_contract($data) {
+<<<<<<< HEAD
         
+=======
+>>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
         return $this->db->insert('Contracts', $data);
     }
 

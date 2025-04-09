@@ -1,5 +1,9 @@
 <div class="container">
+<<<<<<< HEAD
     <h2 class="mb-4">Список клиентов на <?= date('d.m.Y') ?></h2>
+=======
+    <h2 class="mb-4">Список клиентов </h2>
+>>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
     
     <div class="text-right mb-3">
         <button class="btn btn-primary" onclick="window.print()">
