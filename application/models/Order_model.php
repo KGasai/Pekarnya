@@ -91,5 +91,25 @@ class Order_model extends CI_Model {
         $this->db->where('order_id', $order_id);
         return $this->db->get()->result();
     }
+
+    public function get_order_Client($id_user) {
+        $this->db->select('
+            Orders.order_date, 
+            Contracts.contract_number, 
+            Orders.status, 
+            Products.name, 
+            OrderItems.price
+        ');
+        
+        $this->db->from('Orders');
+        $this->db->join('OrderItems', 'Orders.order_id = OrderItems.order_id');
+        $this->db->join('Products', 'OrderItems.product_id = Products.product_id');
+        $this->db->join('Contracts', 'Orders.contract_id = Contracts.contract_id'); // Предполагаем, что есть связь
+        
+        $this->db->where('Contracts.client_id', $id_user);
+        
+        return $this->db->get()->result_array();
+    }
+
 }
 ?>
