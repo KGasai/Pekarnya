@@ -2,8 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Product_model extends CI_Model {
-
-
     // Получение всех активных продуктов
     public function get_active_products() {
         $this->db->where('is_active', 1);

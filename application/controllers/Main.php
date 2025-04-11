@@ -83,18 +83,17 @@ class Main extends CI_Controller {
 	}
 	public function order(){
 		if(isset(($_POST))){
-			$product_id = $_POST["product_id"];
-			$Date = $_POST["date"];
-			$contract_id = $_POST["contract_id"];
-			$quantity = $_POST["quantity"];
-
 			$this -> load->model('Order_model');
+			$this -> load->model('Product_model');
+			$price = $this -> Product_model -> get_product($_POST['product_id'])[0]['price'];
 			$order = array(
 				'client_id' => $this->session->userdata('user_id'),
-				'contract_id' => $contract_id,
-				'order_date' => $Date,
-				'quantity' => $quantity,
-				'product_id' => $product_id,);
+				'contract_id' => $_POST["contract_id"],
+				'order_date' => $_POST["date"],
+				'quantity' => $_POST["quantity"],
+				'product_id' => $_POST["product_id"],
+				'price' => $price *$_POST["quantity"],
+			);
 			$this -> Order_model -> create_order($order);
 			redirect('main/index');
 		}

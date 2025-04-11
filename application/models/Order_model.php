@@ -15,12 +15,12 @@ class Order_model extends CI_Model {
         
         $this->db->insert('Orders', $order);
         $order_id = $this->db->insert_id();
-        
+      
         $order_item = array(
             'order_id' => $order_id,
             'product_id' => $order_data['product_id'],
             'quantity' => $order_data['quantity'],
-            'price' => $order_data['quantity'] * $order_data['price'],
+            'price' => $order_data['price'],
         );
             
          $this->db->insert('OrderItems', $order_item);
@@ -92,6 +92,7 @@ class Order_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    // Получение заказа клиента для личного кабинета
     public function get_order_Client($id_user) {
         $this->db->select('
             Orders.order_date, 

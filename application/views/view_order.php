@@ -20,7 +20,7 @@
             <div class="mb-3">
                 <label for="form-control">Наименование продукции<:<?= $product[0]['name'];?> </label>
                 <input type="hidden" name="product_id" value="<?= $product[0]['product_id'];?>">
-                <input type="hidden" name="price" value="<?= $product[0]['price'];?>">
+                <input type="hidden" name="price" value="<?= $product[0]['price'];?>"> <?= $product[0]['price'];?> 
             </div>
             <div class="mb-3">
                 <label for="form-control">Количество</label>

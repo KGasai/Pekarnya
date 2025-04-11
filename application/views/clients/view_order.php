@@ -18,11 +18,13 @@
                         </thead>
                         <tbody>
                             <?php foreach ($orders as $order): ?>
-                                <td><?= $order['order_date'];?></td>
-                                <td><?= $order['contract_number'];?></td>
-                                <td><?= $order['status'];?></td>
-                                <td><?= $order['name'];?></td>
-                                <td><?= $order['price'];?></td>
+                                <tr>
+                                    <td><?= $order['order_date']; ?></td>
+                                    <td><?= $order['contract_number']; ?></td>
+                                    <td><?= $order['status']; ?></td>
+                                    <td><?= $order['name']; ?></td>
+                                    <td><?= $order['price']; ?></td>
+                                </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
