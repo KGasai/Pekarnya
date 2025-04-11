@@ -2,16 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Product_model extends CI_Model {
-
-    public function __construct() {
-        parent::__construct();
-    }
-
     // Получение всех активных продуктов
     public function get_active_products() {
         $this->db->where('is_active', 1);
-        
-        $this->db->join('ProductCategories', 'ProductCategories.category_id = Products.category_id');
         $query = $this->db->get('Products');
         return $query->result_array();
     }
@@ -21,7 +14,7 @@ class Product_model extends CI_Model {
         $this->db->where('product_id', $product_id);
         $this->db->join('ProductCategories', 'ProductCategories.category_id = Products.category_id');
         $query = $this->db->get('Products');
-        return $query->row_array();
+        return $query->result_array();
     }
 
     // Получение продуктов по категории

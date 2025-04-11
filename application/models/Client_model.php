@@ -3,15 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Client_model extends CI_Model {
 
-    public function __construct() {
-        parent::__construct();
-    }
-
     // Получение всех активных клиентов
     public function get_active_clients() {
-        $this->db->where('is_active', 1);
-        $this->db->where('role', 'client');
-        $query = $this->db->get('Users');
+        $query = $this->db->get('Clients');
         return $query->result_array();
     }
 
@@ -43,13 +37,5 @@ class Client_model extends CI_Model {
         $this->db->where('role', 'client');
         return $this->db->update('Users', array('is_active' => 0));
     }
-<<<<<<< HEAD
-=======
-    public function get_all_clients() {
-        $this->db->where('is_client', 1);
-        $this->db->where('is_active', 1);
-        return $this->db->get('Users')->result();
-    }
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
 }
 ?>

@@ -36,7 +36,7 @@
                            data-productid="<?= $product['product_id'] ?>">
                             <div class="d-flex justify-content-between">
                                 <span><?= $product['name'] ?></span>
-                                <span class="badge bg-secondary"><?= $product['name_cat'] ?></span>
+                                <span class="badge bg-secondary"></span>
                             </div>
                         </a>
                         <?php endforeach; ?>

@@ -16,12 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="Main/login">Авторизация</a>
                 </li>
-<<<<<<< HEAD
-=======
                 <li class="nav-item">
                     <a class="nav-link" href="Main/register">Регистрация</a>
                 </li>
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
             </ul>
         </div>
     </div>

@@ -3,23 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Путевой лист №<?= htmlspecialchars($waybill['waybill_number']) ?></title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h1 { margin-bottom: 5px; }
-        .header .subtitle { font-size: 14px; color: #555; }
-        .info-block { margin-bottom: 30px; }
-        .info-block h2 { font-size: 16px; border-bottom: 1px solid #000; padding-bottom: 5px; }
-        .info-row { display: flex; margin-bottom: 5px; }
-        .info-label { width: 200px; font-weight: bold; }
-        .info-value { flex-grow: 1; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-        th, td { border: 1px solid #000; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .signatures { display: flex; justify-content: space-between; margin-top: 50px; }
-        .signature { width: 250px; border-top: 1px solid #000; padding-top: 5px; }
-        .page-break { page-break-after: always; }
-    </style>
 </head>
 <body>
     <div class="header">

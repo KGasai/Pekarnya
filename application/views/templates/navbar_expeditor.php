@@ -8,11 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-4 me-auto mb-lg-0">
                 <li class="nav-item">
-<<<<<<< HEAD
-                    <a class="nav-link" href="Expeditor/create_waybill">Печать путевых листов </a>
-=======
                     <a class="nav-link" href="Expeditor/index">Печать путевых листов </a>
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
                 </li>
             </ul>
 

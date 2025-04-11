@@ -18,10 +18,12 @@ class Technolog extends CI_Controller {
 		$data['tasks'] = $this->Production_model->get_tasks_by_date(date('Y-m-d'));
         $this->load->view('templates/head.php');
 		
+		$this->load->model('product_model');
+		$data['products'] = $this->product_model->get_active_products();
 		$this->load->view('templates/navbar_technolog.php', $data);
 		
 
-		$this->load->view('view_index.php');
+		$this->load->view('view_index.php', $data);
 		$this->load->view('templates/footer.php');
        
 	}
@@ -128,7 +130,8 @@ public function calculate_requirements() {
 		
 		$date = $_POST['date'];
 		$products = $_POST['products'];
-		$created_by = $this->session->userdata('userdata')['user_id'];
+		
+		$created_by = $this->session->userdata('user_id');
 		
 		if (is_string($products)) {
 			$products = json_decode($products, true);

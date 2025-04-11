@@ -17,11 +17,7 @@
                     <a class="nav-link" href="Director/ingredient_consumption">Печать расходов сырья </a>
                 </li>
                 <li class="nav-item">
-<<<<<<< HEAD
-                    <a class="nav-link" href="Director/production_report">Отчеты </a>
-=======
                     <a class="nav-link" href="Director/production_report">Отчеты  </a>
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="Director/client_orders">Заявки клиентов  </a>

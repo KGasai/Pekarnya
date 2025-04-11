@@ -12,10 +12,10 @@ class Order_model extends CI_Model {
             'contract_id' => $contract_id,
             'order_date' => $order_date,
             'status' => 'new',
-            'notes' => $notes
+            'notes' => '',
         );
         
-        $this->db->insert('Orders', $order_data);
+        $this->db->insert('Orders', $order);
         $order_id = $this->db->insert_id();
         
         // Добавляем позиции заказа
@@ -59,7 +59,7 @@ class Order_model extends CI_Model {
         $query = $this->db->get('Orders');
         
         return $query->result_array();
-    }
+    } 
 
     // Получение заказов клиента за период
     public function get_client_orders($client_id, $start_date, $end_date) {
@@ -98,5 +98,26 @@ class Order_model extends CI_Model {
         $query = $this->db->get('OrderItems');
         return $query->result_array();
     }
+
+    // Получение заказа клиента для личного кабинета
+    public function get_order_Client($id_user) {
+        $this->db->select('
+            Orders.order_date, 
+            Contracts.contract_number, 
+            Orders.status, 
+            Products.name, 
+            OrderItems.price
+        ');
+        
+        $this->db->from('Orders');
+        $this->db->join('OrderItems', 'Orders.order_id = OrderItems.order_id');
+        $this->db->join('Products', 'OrderItems.product_id = Products.product_id');
+        $this->db->join('Contracts', 'Orders.contract_id = Contracts.contract_id'); // Предполагаем, что есть связь
+        
+        $this->db->where('Contracts.client_id', $id_user);
+        
+        return $this->db->get()->result_array();
+    }
+
 }
 ?>
