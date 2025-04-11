@@ -3,27 +3,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Order_model extends CI_Model {
     // Создание заказа
-    public function create_order($client_id, $contract_id, $product_id, $order_date, $notes, $quantity,$price = null) {
+    public function create_order($order_data) {
         
-        $order_data = array(
-            'client_id' => $client_id,
-            'contract_id' => $contract_id,
-            'order_date' => $order_date,
+        $order = array(
+            'client_id' => $order_data['client_id'],
+            'contract_id' => $order_data['contract_id'],
+            'order_date' => $order_data['order_date'],
             'status' => 'new',
-            'notes' => $notes
+            'notes' => '',
         );
         
-        $this->db->insert('Orders', $order_data);
+        $this->db->insert('Orders', $order);
         $order_id = $this->db->insert_id();
         
         $order_item = array(
-                'order_id' => $order_id,
-                'product_id' => $product_id,
-                'quantity' => $quantity,
-                'price' => $price, );
+            'order_id' => $order_id,
+            'product_id' => $order_data['product_id'],
+            'quantity' => $order_data['quantity'],
+            'price' => $order_data['quantity'] * $order_data['price'],
+        );
             
-            $this->db->insert('OrderItems', $order_item);
-        
+         $this->db->insert('OrderItems', $order_item);
     }
 
     // Получение заказов на дату

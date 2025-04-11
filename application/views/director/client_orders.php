@@ -1,22 +1,6 @@
 <div class="container mt-4">
     <h2>Заявки клиентов</h2>
 
-    <!-- Фильтр по датам -->
-    <form method="get" action="<?= base_url('client_orders') ?>" class="mb-4">
-        <div class="row">
-            <div class="col-md-3">
-                <label for="start_date" class="form-label">С даты:</label>
-                <input type="date" name="start_date" id="start_date" value="<?= $start_date ?>" class="form-control">
-            </div>
-            <div class="col-md-3">
-                <label for="end_date" class="form-label">По дату:</label>
-                <input type="date" name="end_date" id="end_date" value="<?= $end_date ?>" class="form-control">
-            </div>
-            <div class="col-md-2 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary">Применить</button>
-            </div>
-        </div>
-    </form>
 
     <?php if (empty($client_orders)): ?>
         <div class="alert alert-info">Нет заказов за выбранный период</div>

@@ -3,10 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Production_model extends CI_Model {
 
-    public function __construct() {
-        parent::__construct();
-    }
-
     // Создание задания на производство
     public function create_task($date, $created_by, $products) {
         $this->db->trans_start();
@@ -71,6 +67,12 @@ class Production_model extends CI_Model {
     public function get_tasks_by_date($date) {
         $this->db->where('task_date', $date);
         $query = $this->db->get('ProductionTasks');
+        return $query->result_array();
+    }
+
+    // Получение всех продуктов
+    public function get_products() {
+        $query = $this->db->get('Products');
         return $query->result_array();
     }
 }

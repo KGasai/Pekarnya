@@ -16,7 +16,7 @@ class Product_model extends CI_Model {
         $this->db->where('product_id', $product_id);
         $this->db->join('ProductCategories', 'ProductCategories.category_id = Products.category_id');
         $query = $this->db->get('Products');
-        return $query->row_array();
+        return $query->result_array();
     }
 
     // Получение продуктов по категории

@@ -21,7 +21,8 @@ class Main extends CI_Controller {
 		}
 
 		$this->load->model('product_model');
-		$this->load->view('view_index.php');
+		$data['products'] = $this->product_model->get_active_products();
+		$this->load->view('view_index.php',$data);
 		$this->load->view('templates/footer.php');
 	}
 
@@ -47,17 +48,9 @@ class Main extends CI_Controller {
 			$data = $this -> User_model -> login( $username, $password );
 			if($data){
 				$this->session->set_userdata('userdata',$data);
-				if($data['role'] == 'client'){
-					redirect('Client/index');
-				}
-				if($data['role'] == 'technologist'){
-					redirect('Technolog/index');
-				}
+
 				$this->session->set_userdata('role',$data['role']);
 				$this->session->set_userdata('user_id',$data['user_id']);
-				if($data['role'] == 'storekeeper'){
-					redirect('Storekeeper/index');
-				}
 				redirect('Main/index');
 			}else{
 				echo "Неверный логин или пароль";
@@ -100,8 +93,11 @@ class Main extends CI_Controller {
 
 	public function doOrder(){
 		$this -> load->model('Contract_model');
+		$this -> load->model('Product_model');
+
 		$data['contracts'] = $this -> Contract_model -> get_contract($this -> session -> userdata['user_id']);
-		var_dump($data['contracts'] );
+		$data['product'] = $this -> Product_model -> get_product($_GET["product_id"]);
+
 		$this->load->view('templates/head');
 		$this->load->view('templates/navbar_client');
 		$this->load->view('view_order', $data);
@@ -110,21 +106,19 @@ class Main extends CI_Controller {
 	public function order(){
 		if(isset(($_POST))){
 			$product_id = $_POST["product_id"];
-			$start_date = $_POST["start_date"];
-			$end_date = $_POST["end_date"];
-			$delivery_terms = $_POST["delivery_terms"];
-			$payment_terms = $_POST["payment_terms"];
+			$Date = $_POST["date"];
+			$contract_id = $_POST["contract_id"];
+			$quantity = $_POST["quantity"];
 
 			$this -> load->model('Order_model');
-			$contract = array(
+			$order = array(
 				'client_id' => $this->session->userdata('user_id'),
-				'start_date' => $start_date,
-				'start_date' => $end_date,
-				'delivery_terms' => $delivery_terms,
-				'payment_terms' => $payment_terms,
-				'product_id' => $product_id,
-);
-			$this -> Order_model -> create_order($contract);
+				'contract_id' => $contract_id,
+				'order_date' => $Date,
+				'quantity' => $quantity,
+				'product_id' => $product_id,);
+			$this -> Order_model -> create_order($order);
+			redirect('main/index');
 		}
 	}
 	public function logout(){
