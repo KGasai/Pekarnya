@@ -22,12 +22,7 @@ class Technolog extends CI_Controller {
 		$data['products'] = $this->product_model->get_active_products();
 		$this->load->view('templates/navbar_technolog.php', $data);
 		
-<<<<<<< HEAD
 		$this->load->view('view_index.php');
-=======
-
-		$this->load->view('view_index.php', $data);
->>>>>>> a9592f66315675003432a9d323ebf0bf757dbc87
 		$this->load->view('templates/footer.php');
        
 	}
