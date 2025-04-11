@@ -3,15 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Order_model extends CI_Model {
     // Создание заказа
-<<<<<<< HEAD
     public function create_order($client_id, $contract_id, $order_date, $items, $notes = null) {
         $this->db->trans_start();
         
         // Создаем заказ
-=======
-    public function create_order($client_id, $contract_id, $product_id, $order_date, $notes, $quantity,$price = null) {
-        
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
         $order_data = array(
             'client_id' => $client_id,
             'contract_id' => $contract_id,
@@ -23,7 +18,6 @@ class Order_model extends CI_Model {
         $this->db->insert('Orders', $order_data);
         $order_id = $this->db->insert_id();
         
-<<<<<<< HEAD
         // Добавляем позиции заказа
         foreach ($items as $item) {
             $order_item = array(
@@ -39,16 +33,6 @@ class Order_model extends CI_Model {
         $this->db->trans_complete();
         
         return $this->db->trans_status() ? $order_id : false;
-=======
-        $order_item = array(
-                'order_id' => $order_id,
-                'product_id' => $product_id,
-                'quantity' => $quantity,
-                'price' => $price, );
-            
-            $this->db->insert('OrderItems', $order_item);
-        
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
     }
 
     // Получение заказов на дату
@@ -58,11 +42,7 @@ class Order_model extends CI_Model {
         $this->db->join('OrderItems', 'OrderItems.order_id = Orders.order_id');
         $this->db->join('Products', 'Products.product_id = OrderItems.product_id');
         $this->db->join('Users', 'Users.user_id = Orders.client_id');
-<<<<<<< HEAD
         $this->db->select('Orders.*, OrderItems.*, Products.name as product_name, Products.unit_of_measure, Users.full_name as client_name');
-=======
-        $this->db->select('Orders.*, OrderItems.*, Products.name as product_name, Products.unit_of_measure, Users.name as client_name');
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
         $query = $this->db->get('Orders');
         
         return $query->result_array();
@@ -83,7 +63,6 @@ class Order_model extends CI_Model {
 
     // Получение заказов клиента за период
     public function get_client_orders($client_id, $start_date, $end_date) {
-<<<<<<< HEAD
         $this->db->where('client_id', $client_id);
         $this->db->where('order_date >=', $start_date);
         $this->db->where('order_date <=', $end_date);
@@ -95,20 +74,6 @@ class Order_model extends CI_Model {
         $query = $this->db->get('Orders');
         
         return $query->result_array();
-=======
-        $this->db->select('Orders.*');
-        $this->db->from('Orders');
-        $this->db->where('client_id', $client_id);
-        $this->db->where('order_date >=', $start_date);
-        $this->db->where('order_date <=', $end_date);
-        $orders = $this->db->get()->result();
-        
-        foreach ($orders as $order) {
-            $order->items = $this->get_order_items($order->order_id);
-        }
-        
-        return $orders;
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
     }
 
     // Обновление статуса заказа
@@ -125,7 +90,6 @@ class Order_model extends CI_Model {
         $query = $this->db->get('Orders');
         return $query->row_array();
     }
-<<<<<<< HEAD
 
     // Получение позиций заказа
     public function get_order_items($order_id) {
@@ -133,16 +97,6 @@ class Order_model extends CI_Model {
         $this->db->join('Products', 'Products.product_id = OrderItems.product_id');
         $query = $this->db->get('OrderItems');
         return $query->result_array();
-=======
-    
-    // Получение позиций заказа
-    public function get_order_items($order_id) {
-        $this->db->select('OrderItems.*, Products.name as product_name, Products.unit_of_measure');
-        $this->db->from('OrderItems');
-        $this->db->join('Products', 'Products.product_id = OrderItems.product_id');
-        $this->db->where('order_id', $order_id);
-        return $this->db->get()->result();
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
     }
 }
 ?>
