@@ -14,27 +14,14 @@ class Main extends CI_Controller {
 			$this->load->view('templates/navbar_owner.php');
 		} else if ($this->session->userdata('role') == 'storekeeper') {
 			$this->load->view('templates/navbar_storekeeper.php');
-<<<<<<< HEAD
-		}
-		else if ($this->session->userdata('role') == 'client') {
-			$this->load->view('templates/navbar_client.php');
-		}
-		 else {
-			$this->load->view('templates/navbar.php');
-		}
-
-		$this->load->view('view_index.php');
-=======
 		} else if ($this->session->userdata('role') == 'client') {
 			$this->load->view('templates/navbar_client.php');
 		} else {
 			$this->load->view('templates/navbar.php');
 		}
 
-		$this->load->model('Product_model');
-		$data['Products'] = $this->Product_model->get_active_products();
-		$this->load->view('view_index.php',$data);
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
+		$this->load->model('product_model');
+		$this->load->view('view_index.php');
 		$this->load->view('templates/footer.php');
 	}
 
@@ -45,8 +32,6 @@ class Main extends CI_Controller {
 		$this->load->view('templates/footer.php');
 	}
 
-<<<<<<< HEAD
-=======
 	public function register(){
 		$this->load->view('templates/head.php');
 		$this->load->view('templates/navbar.php');
@@ -54,7 +39,6 @@ class Main extends CI_Controller {
 		$this->load->view('templates/footer.php');
 	}
 
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
 	public function selectUser(){
 		if(!empty(($_POST))){
 			$username = $_POST['username'];
@@ -62,7 +46,6 @@ class Main extends CI_Controller {
 			$this -> load->model('User_model');
 			$data = $this -> User_model -> login( $username, $password );
 			if($data){
-<<<<<<< HEAD
 				$this->session->set_userdata('userdata',$data);
 				if($data['role'] == 'client'){
 					redirect('Client/index');
@@ -70,16 +53,11 @@ class Main extends CI_Controller {
 				if($data['role'] == 'technologist'){
 					redirect('Technolog/index');
 				}
-<<<<<<< HEAD
-=======
 				$this->session->set_userdata('role',$data['role']);
 				$this->session->set_userdata('user_id',$data['user_id']);
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
-=======
 				if($data['role'] == 'storekeeper'){
 					redirect('Storekeeper/index');
 				}
->>>>>>> storekeeper
 				redirect('Main/index');
 			}else{
 				echo "Неверный логин или пароль";
@@ -87,8 +65,6 @@ class Main extends CI_Controller {
 		}
 	}
 
-<<<<<<< HEAD
-=======
 	public function insertUser(){
 		if(!empty(($_POST))){
 			$full_name = $_POST['full_name'];
@@ -151,7 +127,6 @@ class Main extends CI_Controller {
 			$this -> Order_model -> create_order($contract);
 		}
 	}
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
 	public function logout(){
 		$this->session->sess_destroy();
 		redirect('main/index');

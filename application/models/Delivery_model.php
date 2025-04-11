@@ -73,8 +73,6 @@ class Delivery_model extends CI_Model {
         $this->db->where('waybill_id', $waybill_id);
         return $this->db->update('Waybills', array($field => $time));
     }
-<<<<<<< HEAD
-=======
 
      // Поиск накладных
     public function search_waybills($start_date, $end_date, $status = null) {
@@ -92,6 +90,5 @@ class Delivery_model extends CI_Model {
         
         return $this->db->get()->result_array();
     }
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
 }
 ?>

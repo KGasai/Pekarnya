@@ -43,13 +43,10 @@ class Client_model extends CI_Model {
         $this->db->where('role', 'client');
         return $this->db->update('Users', array('is_active' => 0));
     }
-<<<<<<< HEAD
-=======
     public function get_all_clients() {
         $this->db->where('is_client', 1);
         $this->db->where('is_active', 1);
         return $this->db->get('Users')->result();
     }
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
 }
 ?>

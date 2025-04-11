@@ -1,9 +1,5 @@
 <div class="container">
-<<<<<<< HEAD
-    <h2 class="mb-4">Создание путевого листа на <?= date('d.m.Y', strtotime($date)) ?></h2>
-=======
     <h2 class="mb-4">Создание путевого листа </h2>
->>>>>>> 1502d7de3e3125ed9597fcd2fdb658b8a5a38855
     
     <form method="post" action="<?= site_url('expeditor/save_waybill') ?>">
         <input type="hidden" name="date" value="<?= $date ?>">
