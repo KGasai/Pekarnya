@@ -31,6 +31,7 @@
 
 <div class="container mt-5">
     <?php foreach($contracts as $contract): ?>
+     
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="card border-primary mb-4 shadow">

@@ -234,10 +234,11 @@ $(document).ready(function() {
             method: 'POST',
             data: taskData,
             success: function(response) {
+                console.log(response);
                 if (response) {
-                    alert('Задание успешно создано!');
+                    //alert('Задание успешно создано!');
                     $('#newTaskModal').modal('hide');
-                    location.reload(); // Обновляем страницу
+                    //location.reload(); // Обновляем страницу
                 } else {
                     alert('Ошибка: ' + response.message);
                 }

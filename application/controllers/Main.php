@@ -12,7 +12,7 @@ class Main extends CI_Controller {
 			$this->load->view('templates/navbar_expeditor.php');
 		} else if ($this->session->userdata('role') == 'director') {
 			$this->load->view('templates/navbar_owner.php');
-		} else if ($this->session->userdata('role') == 'storekeeper') {
+		} else if ($this->session->userdata('role') == 'storekeeper'){
 			$this->load->view('templates/navbar_storekeeper.php');
 		} else if ($this->session->userdata('role') == 'client') {
 			$this->load->view('templates/navbar_client.php');
