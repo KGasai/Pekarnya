@@ -20,7 +20,7 @@ class Technolog extends CI_Controller {
 		
 		$this->load->model('product_model');
 		$data['products'] = $this->product_model->get_active_products();
-		$this->load->view('templates/navbar_technolog.php', $data);
+		$this->load->view('templates/navbar_technologist.php', $data);
 		
 		$this->load->view('view_index.php');
 		$this->load->view('templates/footer.php');
@@ -36,7 +36,7 @@ class Technolog extends CI_Controller {
 
         $this->load->view('templates/head.php');
 		
-		$this->load->view('templates/navbar_technolog.php', $data);
+		$this->load->view('templates/navbar_technologist.php', $data);
 		
 		$this->load->view('technolog/view_tasks.php');
 		$this->load->view('templates/footer.php');
@@ -49,7 +49,7 @@ class Technolog extends CI_Controller {
 		$data['ingredients'] = $this->Ingredient_model->get_active_ingredients();
 		$data['categories'] = $this->Product_model->get_categories();
 		
-		$this->load->view('templates/navbar_technolog.php');
+		$this->load->view('templates/navbar_technologist.php');
 		
 		$this->load->view('technolog/view_recipes.php', $data);
 		$this->load->view('templates/footer.php');
@@ -99,7 +99,7 @@ public function remove_ingredient($recipe_id) {
 
 		$this->load->view('templates/head.php');
 		
-		$this->load->view('templates/navbar_technolog.php');
+		$this->load->view('templates/navbar_technologist.php');
 		
 
 		$this->load->view('technolog/view_calculation.php', $data);
@@ -185,7 +185,7 @@ public function calculate_requirements() {
 
 		$this->load->view('templates/head.php');
 		
-		$this->load->view('templates/navbar_technolog.php');
+		$this->load->view('templates/navbar_technologist.php');
 		
 
 		$this->load->view('technolog/view_orders.php',$data);
