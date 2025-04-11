@@ -69,31 +69,28 @@ class Director extends CI_Controller {
         $this->load->model('Order_model');
         $this->load->model('Client_model');
         $this->load->model('Contract_model');
-    
-        // Устанавливаем даты по умолчанию (текущий месяц)
-        $start_date = $start_date ?? date('Y-m-01');
-        $end_date = $end_date ?? date('Y-m-d');
-        
-        // Получаем всех клиентов
-        $clients = $this->Client_model->get_all_clients();
-        
-        // Для каждого клиента получаем заказы и контракты
+
+        $clients = $this->Client_model->get_active_clients();
+
+        $start_date = $start_date ?? date('Y-m-d', strtotime('-10 day'));
+        $end_date = $end_date ?? date('Y-m-d', strtotime('+1 day')); 
+
+        $user_id = $this->session->userdata('user_id');
         $data['client_orders'] = [];
+
         foreach ($clients as $client) {
-            $orders = $this->Order_model->get_client_orders($client->user_id, $start_date, $end_date);
-            $contracts = $this->Contract_model->get_client_contracts($client->user_id);
+            $orders = $this->Order_model->get_client_orders($user_id, $start_date, $end_date);
+            $contracts = $this->Contract_model->get_client_contracts($user_id);
             
-            if (!empty($orders)) {
-                $data['client_orders'][] = [
-                    'client' => $client,
-                    'orders' => $orders,
-                    'contracts' => $contracts
-                ];
-            }
+            $data['client_orders'][] = [
+                'client' => $client,
+                'orders' => $orders,
+                'contracts' => $contracts
+            ];
         }
         
-        $data['start_date'] = $start_date;
-        $data['end_date'] = $end_date;
+        $data['start_date'] = $start_date?? date('Y-m-d');
+        $data['end_date'] = $end_date ?? date('Y-m-d', strtotime('+1 day')); 
     
         $this->load->view('templates/head');
         $this->load->view('templates/navbar_owner');

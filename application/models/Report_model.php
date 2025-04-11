@@ -32,9 +32,7 @@ class Report_model extends CI_Model {
 
     // Получение отчета о производстве
     public function get_production_report($start_date, $end_date) {
-        $this->db->where('task_date >=', $start_date);
-        $this->db->where('task_date <=', $end_date);
-        $this->db->where('status', 'completed');
+
         $this->db->join('ProductionTaskItems', 'ProductionTaskItems.task_id = ProductionTasks.task_id');
         $this->db->join('Products', 'Products.product_id = ProductionTaskItems.product_id');
         $this->db->select('Products.product_id, Products.name as product_name, Products.unit_of_measure, SUM(ProductionTaskItems.quantity) as total_quantity');

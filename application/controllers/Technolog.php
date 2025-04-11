@@ -20,7 +20,6 @@ class Technolog extends CI_Controller {
 		
 		$this->load->view('templates/navbar_technolog.php', $data);
 		
-
 		$this->load->view('view_index.php');
 		$this->load->view('templates/footer.php');
        
@@ -29,8 +28,6 @@ class Technolog extends CI_Controller {
 	
     public function tasks()
 	{ 
-		
-
 
 		$data['tasks'] = $this->Production_model->get_tasks_by_date(date('Y-m-d'));
 		$data['products'] = $this->Product_model->get_active_products();
@@ -39,7 +36,6 @@ class Technolog extends CI_Controller {
 		
 		$this->load->view('templates/navbar_technolog.php', $data);
 		
-
 		$this->load->view('technolog/view_tasks.php');
 		$this->load->view('templates/footer.php');
        
