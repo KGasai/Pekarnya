@@ -43,7 +43,7 @@ class Client extends CI_Controller
     public function contracts()
     {
         $this->load->model('contract_model');
-        $client_id = $this->session->userdata('userdata')['user_id'];
+        $client_id = $this->session->userdata('user_id');
         if (isset($_POST['dog'])) {
             $d = $_POST;
             $d['client_id'] = $client_id;
@@ -67,7 +67,7 @@ class Client extends CI_Controller
         $this->load->model('product_model');
         $this->load->model('contract_model');
 
-        $client_id = $this->session->userdata('userdata')['user_id'];
+        $client_id = $this->session->userdata('user_id');
 
         if (isset($_POST['dog'])) {
             $contract_id = (int) $_POST['contract_id'];
