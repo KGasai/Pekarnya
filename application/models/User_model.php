@@ -4,14 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class User_model extends CI_Model {
 
     // Проверка авторизации пользователя
-    public function login($username, $password) {
-        $this->db->where('username', $username);
-        $this->db->where('password', $password);
+    public function login($array) {
+        $this->db->where('username', $array['username']);
+        $this->db->where('password', $array['password']);
         $query = $this->db->get('Users');
         
         if ($query->num_rows() == 1) {
-            $user = $query->row_array();
-            return $user;
+            return $query->result_array();
         }
     }
 

@@ -24,14 +24,6 @@
                     <label for="form-control">Введите email</label>
                     <input type="text" name="email" class="form-control">
                 </div>
-                <div class="mb-3">
-                    <label for="form-control">Введите инн</label>
-                    <input type="number" name="inn" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label for="form-control">Введите адрес</label>
-                    <input type="text" name="adress" class="form-control">
-                </div>
                 <button type="submit" class="btn btn-success">Регистрация</button>
             </div>
         </div>

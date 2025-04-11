@@ -21,10 +21,10 @@
                 <tbody>
                     <?php foreach ($clients as $client): ?>
                     <tr>
-                        <td><?= htmlspecialchars($client['full_name']) ?></td>
-                        <td><?= htmlspecialchars($client['inn']) ?></td>
-                        <td><?= htmlspecialchars($client['address']) ?></td>
-                        <td><?= htmlspecialchars($client['phone']) ?></td>
+                        <td><?= $client['name']; ?></td>
+                        <td><?= $client['inn']; ?></td>
+                        <td><?= $client['address']; ?></td>
+                        <td><?= $client['phone']; ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

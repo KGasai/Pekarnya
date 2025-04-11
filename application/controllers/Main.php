@@ -41,16 +41,12 @@ class Main extends CI_Controller {
 	}
 
 	public function selectUser(){
-		if(!empty(($_POST))){
-			$username = $_POST['username'];
-			$password = $_POST['password'];
+		if(isset(($_POST))){
 			$this -> load->model('User_model');
-			$data = $this -> User_model -> login( $username, $password );
+			$data = $this -> User_model -> login($_POST);
 			if($data){
-				$this->session->set_userdata('userdata',$data);
-
-				$this->session->set_userdata('role',$data['role']);
-				$this->session->set_userdata('user_id',$data['user_id']);
+				$this->session->set_userdata('role',$data[0]['role']);
+				$this->session->set_userdata('user_id',$data[0]['user_id']);
 				redirect('Main/index');
 			}else{
 				echo "Неверный логин или пароль";
@@ -60,27 +56,9 @@ class Main extends CI_Controller {
 
 	public function insertUser(){
 		if(!empty(($_POST))){
-			$full_name = $_POST['full_name'];
-			$username = $_POST['username'];
-			$password = $_POST['password'];
-			$phone = $_POST['phone'];
-			$email = $_POST['email'];
-			$inn = $_POST['inn'];
-			$adress = $_POST['adress'];
-
-			$data = array(
-				'username'=> $username,
-				'full_name'=> $full_name,
-				'password' => $password,
-				'phone' => $phone,
-				'email' => $email,
-				'inn' => $inn,
-				'address' => $adress,
-			 );
-
 			$this -> load->model('User_model');
-			$this -> User_model -> add_user( $data );
-			$data = $this -> User_model -> get_user_by_username_and_password( $username, $password );
+			$this -> User_model -> add_user( $_POST );
+			$data = $this -> User_model -> login( $_POST);
 			if($data){
 				$this->session->set_userdata('role',$data['role']);
 				$this->session->set_userdata('user_id',$data['user_id']);
