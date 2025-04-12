@@ -4,8 +4,12 @@
         <h2>Личные данные</h2>
         <form action="Client/editData" method="post">
             <div class="mb-3">
+                <label for="form-control">Введите наименование:</label>
+                <input type="text" name="name" id="form-control" class="form-control">
+            </div>
+            <div class="mb-3">
                 <label for="form-control">Введите ИНН:</label>
-                <input type="number" name="innn" id="form-control" class="form-control">
+                <input type="number" name="inn" id="form-control" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="form-control">Введите адрес:</label>

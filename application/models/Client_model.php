@@ -26,6 +26,13 @@ class Client_model extends CI_Model {
 
     // Добавление нового клиента в таблицу Clients
     public function add_clientTableClients($data) {
+        $data = array(
+            'name' => $data['name'],
+            'inn' => $data['inn'],
+            'address' => $data['address'],
+            'phone' => $data['phone'],
+            'contact_person' => $data['contact_person'],
+        );
         return $this->db->insert('Clients', $data);
     }
 
