@@ -96,7 +96,6 @@
                                     <th>Номер</th>
                                     <th>Дата</th>
                                     <th>Сумма</th>
-                                    <th>Действия</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -105,12 +104,7 @@
                                     <td><?php echo $receipt['document_number']; ?></td>
                                     <td><?php echo date('d.m.Y', strtotime($receipt['date'])); ?></td>
                                     <td><?php echo number_format($receipt['total_cost'], 2); ?></td>
-                                    <td>
-                                        <a href="<?php echo site_url('Storekeeper/view_receipt/' . $receipt['receipt_id']); ?>" 
-                                           class="btn btn-sm btn-outline-primary" title="Просмотр">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                    </td>
+                                    
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>

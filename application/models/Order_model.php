@@ -89,10 +89,8 @@ class Order_model extends CI_Model
     public function get_order_items($order_id)
     {
         $this->db->select('OrderItems.*, Products.name as product_name, Products.unit_of_measure');
-        $this->db->from('OrderItems');
         $this->db->join('Products', 'Products.product_id = OrderItems.product_id');
         $this->db->where('order_id', $order_id);
-        $this->db->join('Products', 'Products.product_id = OrderItems.product_id');
         $query = $this->db->get('OrderItems');
         return $query->result_array();
     }

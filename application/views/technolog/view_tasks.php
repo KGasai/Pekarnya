@@ -238,7 +238,7 @@ $(document).ready(function() {
                 if (response) {
                     //alert('Задание успешно создано!');
                     $('#newTaskModal').modal('hide');
-                    //location.reload(); // Обновляем страницу
+                    location.reload(); // Обновляем страницу
                 } else {
                     alert('Ошибка: ' + response.message);
                 }
@@ -266,7 +266,6 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
                 if (response.success) {
-
                     $('#taskId').text(response.task.task_id);
                     $('#taskDateView').text(response.task.task_date_formatted);
                     $('#taskShiftView').text(response.task.shift == 'morning' ? 'Утренняя' : 'Вечерняя');

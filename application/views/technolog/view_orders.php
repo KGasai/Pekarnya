@@ -161,6 +161,7 @@ $(document).ready(function() {
             method: 'GET',
             dataType: 'json',
             success: function(response) {
+                console.log(response);
                 if (response.success) {
                     const order = response.order;
                     const items = response.items;
@@ -231,10 +232,11 @@ $(document).ready(function() {
         
         $.ajax({
             url: '<?= base_url("Technolog/update_order_status/") ?>' + orderId,
-            method: 'POST',
+            method: 'GET',
             data: { status: status },
             dataType: 'json',
             success: function(response) {
+                console.log(response);
                 if (response.success) {
                     alert('Статус заказа обновлен');
                     $('#orderDetailsModal').modal('hide');

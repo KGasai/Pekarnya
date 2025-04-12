@@ -105,7 +105,6 @@
                                     <th>Дата</th>
                                     <th>Кто выдал</th>
                                     <th>Кому</th>
-                                    <th>Действия</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -115,12 +114,7 @@
                                     <td><?php echo date('d.m.Y', strtotime($consumption['date'])); ?></td>
                                     <td><?php echo $consumption['issued_by_name']; ?></td>
                                     <td><?php echo $consumption['issued_to']; ?></td>
-                                    <td>
-                                        <a href="<?php echo site_url('Storekeeper/view_consumption/' . $consumption['consumption_id']); ?>" 
-                                           class="btn btn-sm btn-outline-primary" title="Просмотр">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                    </td>
+                                   
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>

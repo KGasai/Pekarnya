@@ -132,12 +132,22 @@ public function calculate_requirements() {
 		if (is_string($products)) {
 			$products = json_decode($products, true);
 		}
+
+		
 		
 		
 
 		$this->load->model('Production_model');
 		
-		$task_id = $this->Production_model->create_task($date, $created_by, $products);
+		$new_products = [];
+		foreach($products as $product){
+			$new_products[$product['product_id']] = $product['quantity'];
+		}
+			
+		
+		
+
+		$task_id = $this->Production_model->create_task($date, $created_by, $new_products);
 		
 		if ($task_id) {
 			echo json_encode(['success' => true, 'task_id' => $task_id]);
@@ -196,6 +206,7 @@ public function calculate_requirements() {
 	public function get_order_details($order_id) {
 		$this->load->model('Order_model');
 		
+		
 		$order = $this->Order_model->get_order($order_id);
 		
 		if (!$order) {
@@ -216,7 +227,8 @@ public function calculate_requirements() {
 	public function update_order_status($order_id) {
 		$this->load->model('Order_model');
 		
-		$status = $this->input->post('status');
+		$status = $this->input->get('status');
+		
 		$result = $this->Order_model->update_order_status($order_id, $status);
 		
 		echo json_encode(['success' => $result]);
