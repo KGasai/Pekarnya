@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 13 2025 г., 12:08
+-- Время создания: Апр 13 2025 г., 20:01
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -43,7 +43,10 @@ CREATE TABLE `Clients` (
 --
 
 INSERT INTO `Clients` (`client_id`, `name`, `inn`, `address`, `phone`, `contact_person`, `is_active`, `user_id`) VALUES
-(2, 'Магазин \'test\'', '12314', 'Новочеркасск,', '89964388701', 'Савелий Бульдаг', 1, 1);
+(2, 'Магазин \'test\'', '12314', 'Новочеркасск,', '89964388701', 'Савелий Бульдаг', 1, 1),
+(3, 'Bakery Shop 1', '1234567890', '123 Main St, City', '+79151234567', 'John Doe', 1, 4),
+(4, 'Supermarket Chain', '2345678901', '456 Market Ave, Town', '+79161234567', 'Jane Smith', 1, 4),
+(5, 'test1', '13214', 'РОСТОВСКАЯ ОБЛ, Г НОВОЧЕРКАССК, П. ПЛАТВОСКИЙ, Д. 116', '+79964388701', 'Савелий Буль', 1, 8);
 
 -- --------------------------------------------------------
 
@@ -68,7 +71,11 @@ CREATE TABLE `Contracts` (
 --
 
 INSERT INTO `Contracts` (`contract_id`, `client_id`, `contract_number`, `contract_date`, `start_date`, `end_date`, `delivery_terms`, `payment_terms`, `is_active`) VALUES
-(1, 1, 'Б-234', '2025-04-20', '2025-04-20', '2025-05-13', 'Каждое утро', 'Безналичка', 1);
+(1, 1, 'Б-234', '2025-04-20', '2025-04-20', '2025-05-13', 'Каждое утро', 'Безналичка', 1),
+(2, 1, 'CON-001', '2025-01-01', '2025-01-01', '2025-12-31', 'Daily delivery before 9 AM', 'Безналичка', 1),
+(3, 2, 'CON-002', '2025-02-01', '2025-02-01', '2025-12-31', '3 times per week', 'Безналичка', 1),
+(4, 8, 'В-333', '2025-04-20', '2025-04-20', '2025-05-15', 'Курьер', 'Наличный', 1),
+(5, 8, 'Ш-1234', '2025-04-20', '2025-04-20', '2025-04-20', 'Самовывоз', 'Карта', 1);
 
 -- --------------------------------------------------------
 
@@ -83,6 +90,15 @@ CREATE TABLE `DeliveryRoutes` (
   `delivery_order` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Дамп данных таблицы `DeliveryRoutes`
+--
+
+INSERT INTO `DeliveryRoutes` (`route_id`, `vehicle_id`, `client_id`, `delivery_order`) VALUES
+(9, 1, 3, 1),
+(10, 1, 4, 2),
+(11, 2, 4, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -96,6 +112,14 @@ CREATE TABLE `DeliveryVehicles` (
   `capacity` decimal(10,2) NOT NULL,
   `is_active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `DeliveryVehicles`
+--
+
+INSERT INTO `DeliveryVehicles` (`vehicle_id`, `license_plate`, `model`, `capacity`, `is_active`) VALUES
+(1, 'A123BC77', 'Ford Transit', '2000.00', 1),
+(2, 'B456DE77', 'Mercedes Sprinter', '2500.00', 1);
 
 -- --------------------------------------------------------
 
@@ -180,6 +204,15 @@ CREATE TABLE `IngredientReceiptItems` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
+-- Дамп данных таблицы `IngredientReceiptItems`
+--
+
+INSERT INTO `IngredientReceiptItems` (`receipt_item_id`, `receipt_id`, `ingredient_id`, `quantity`, `cost_per_unit`, `total_cost`) VALUES
+(1, 1, 1, '100.000', '50.00', '5000.00'),
+(2, 2, 2, '30.000', '60.00', '1800.00'),
+(3, 2, 3, '4.000', '300.00', '1200.00');
+
+--
 -- Триггеры `IngredientReceiptItems`
 --
 DELIMITER $$
@@ -214,6 +247,14 @@ CREATE TABLE `IngredientReceipts` (
   `notes` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Дамп данных таблицы `IngredientReceipts`
+--
+
+INSERT INTO `IngredientReceipts` (`receipt_id`, `document_number`, `date`, `supplier_id`, `total_cost`, `received_by`, `notes`) VALUES
+(1, 'REC-001', '2025-04-10', NULL, '5000.00', 3, 'Monthly flour delivery'),
+(2, 'REC-002', '2025-04-11', NULL, '3000.00', 3, 'Sugar and butter delivery');
+
 -- --------------------------------------------------------
 
 --
@@ -229,6 +270,15 @@ CREATE TABLE `Ingredients` (
   `cost_per_unit` decimal(10,2) DEFAULT NULL,
   `is_active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `Ingredients`
+--
+
+INSERT INTO `Ingredients` (`ingredient_id`, `name`, `unit_of_measure`, `current_stock`, `min_stock`, `cost_per_unit`, `is_active`) VALUES
+(1, 'Wheat Flour', 'kg', '600.000', '100.000', '50.00', 1),
+(2, 'Sugar', 'kg', '230.000', '50.000', '60.00', 1),
+(3, 'Butter', 'kg', '104.000', '20.000', '300.00', 1);
 
 --
 -- Триггеры `Ingredients`
@@ -258,6 +308,15 @@ CREATE TABLE `IngredientStockLog` (
   `balance` decimal(10,3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Дамп данных таблицы `IngredientStockLog`
+--
+
+INSERT INTO `IngredientStockLog` (`log_id`, `date`, `ingredient_id`, `incoming`, `outgoing`, `balance`) VALUES
+(1, '2025-04-13', 1, '100.000', '0.000', '600.000'),
+(2, '2025-04-13', 2, '30.000', '0.000', '230.000'),
+(3, '2025-04-13', 3, '4.000', '0.000', '104.000');
+
 -- --------------------------------------------------------
 
 --
@@ -271,6 +330,18 @@ CREATE TABLE `OrderItems` (
   `quantity` decimal(10,3) NOT NULL,
   `price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `OrderItems`
+--
+
+INSERT INTO `OrderItems` (`order_item_id`, `order_id`, `product_id`, `quantity`, `price`) VALUES
+(1, 1, 1, '20.000', '45.00'),
+(2, 1, 2, '15.000', '55.00'),
+(3, 2, 3, '30.000', '75.00'),
+(4, 2, 4, '5.000', '320.00'),
+(5, 3, 2, '10.000', '550.00'),
+(6, 4, 3, '12.000', '900.00');
 
 -- --------------------------------------------------------
 
@@ -287,6 +358,16 @@ CREATE TABLE `Orders` (
   `notes` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Дамп данных таблицы `Orders`
+--
+
+INSERT INTO `Orders` (`order_id`, `client_id`, `contract_id`, `order_date`, `status`, `notes`) VALUES
+(1, 1, 1, '2025-04-15', 'new', 'Regular weekly order'),
+(2, 2, 2, '2025-04-16', 'in_progress', 'Special event order'),
+(3, 8, 4, '', 'new', ''),
+(4, 8, 5, '2025-04-20', 'completed', '');
+
 -- --------------------------------------------------------
 
 --
@@ -298,6 +379,15 @@ CREATE TABLE `ProductCategories` (
   `name_cat` varchar(50) NOT NULL,
   `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `ProductCategories`
+--
+
+INSERT INTO `ProductCategories` (`category_id`, `name_cat`, `description`) VALUES
+(1, 'Bread', 'Various types of bread'),
+(2, 'Pastries', 'Sweet baked goods'),
+(3, 'Pies', 'Various pies with fillings');
 
 -- --------------------------------------------------------
 
@@ -311,6 +401,16 @@ CREATE TABLE `ProductionTaskItems` (
   `product_id` int NOT NULL,
   `quantity` decimal(10,3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `ProductionTaskItems`
+--
+
+INSERT INTO `ProductionTaskItems` (`task_item_id`, `task_id`, `product_id`, `quantity`) VALUES
+(1, 1, 1, '20.000'),
+(2, 1, 2, '15.000'),
+(3, 2, 3, '30.000'),
+(4, 2, 4, '5.000');
 
 -- --------------------------------------------------------
 
@@ -326,6 +426,14 @@ CREATE TABLE `ProductionTasks` (
   `created_by` int NOT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `ProductionTasks`
+--
+
+INSERT INTO `ProductionTasks` (`task_id`, `task_date`, `shift`, `status`, `created_by`, `created_at`) VALUES
+(1, '2025-04-15', 'morning', 'planned', 2, '2025-04-13 12:10:08'),
+(2, '2025-04-15', 'evening', 'planned', 2, '2025-04-13 12:10:08');
 
 -- --------------------------------------------------------
 
@@ -343,6 +451,16 @@ CREATE TABLE `Products` (
   `is_active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Дамп данных таблицы `Products`
+--
+
+INSERT INTO `Products` (`product_id`, `category_id`, `name`, `unit_of_measure`, `weight`, `price`, `is_active`) VALUES
+(1, 1, 'Белый хлеб', 'кусок', '0.500', '45.00', 1),
+(2, 1, 'Хлеб из цельнозерновой муки', 'кусок', '0.600', '55.00', 1),
+(3, 2, 'Круассан', 'кусок', '0.150', '75.00', 1),
+(4, 3, 'Яблочный пирог', 'кусок', '1.000', '320.00', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -355,6 +473,18 @@ CREATE TABLE `Recipes` (
   `ingredient_id` int NOT NULL,
   `quantity` decimal(10,3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `Recipes`
+--
+
+INSERT INTO `Recipes` (`recipe_id`, `product_id`, `ingredient_id`, `quantity`) VALUES
+(1, 1, 1, '0.300'),
+(2, 1, 2, '0.010'),
+(3, 2, 1, '0.350'),
+(4, 2, 2, '0.015'),
+(5, 3, 1, '0.200'),
+(6, 3, 3, '0.100');
 
 -- --------------------------------------------------------
 
@@ -378,7 +508,13 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`user_id`, `username`, `password`, `full_name`, `role`, `phone`, `email`, `is_active`) VALUES
-(1, 'test', 'test', 'Магазин \"test\"', 'client', '+79964388701', 'test@gmail.com', 1);
+(1, 'test', 'test', 'Магазин \"test\"', 'client', '+79964388701', 'test@gmail.com', 1),
+(2, 'owner', 'owner', 'owner', 'director', '+79101234567', 'admin@bakery.com', 1),
+(3, 'technologist', 'technologist', 'technologist', 'technologist', '+79111234567', 'techno@bakery.com', 1),
+(4, 'storekeeper', 'storekeeper', 'storekeeper', 'storekeeper', '+79121234567', 'store@bakery.com', 1),
+(5, 'expeditor', 'expeditor', 'expeditor', 'expeditor', '+79131234567', 'client1@shop.com', 1),
+(6, 'Ivan', 'Ivan', 'Иван Иваныч', 'driver', '+79141234567', 'driver@bakery.com', 1),
+(8, 'test1', 'test1', 'test', 'client', '+79964388701', 'test@yandex.ru', 1);
 
 -- --------------------------------------------------------
 
@@ -393,6 +529,16 @@ CREATE TABLE `WaybillItems` (
   `product_id` int NOT NULL,
   `quantity` decimal(10,3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `WaybillItems`
+--
+
+INSERT INTO `WaybillItems` (`waybill_item_id`, `waybill_id`, `order_id`, `product_id`, `quantity`) VALUES
+(1, 3, 4, 3, '12.000'),
+(2, 4, 4, 3, '11.951'),
+(3, 5, 4, 3, '11.958'),
+(4, 6, 4, 3, '5.000');
 
 -- --------------------------------------------------------
 
@@ -411,6 +557,18 @@ CREATE TABLE `Waybills` (
   `return_time` datetime DEFAULT NULL,
   `status` enum('planned','in_progress','completed') DEFAULT 'planned'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `Waybills`
+--
+
+INSERT INTO `Waybills` (`waybill_id`, `waybill_number`, `date`, `vehicle_id`, `driver_id`, `expeditor_id`, `departure_time`, `return_time`, `status`) VALUES
+(1, 'WB-001', '2025-04-15', 1, 5, 3, NULL, NULL, 'planned'),
+(2, 'WB-002', '2025-04-16', 2, 5, 3, NULL, NULL, 'planned'),
+(3, 'WB-20250413-0001', '2025-04-13', 1, 6, 5, NULL, NULL, 'planned'),
+(4, 'WB-20250413-0002', '2025-04-13', 1, 6, 5, NULL, NULL, 'planned'),
+(5, 'WB-20250413-0003', '2025-04-13', 1, 6, 5, NULL, NULL, 'planned'),
+(6, 'WB-20250413-0004', '2025-04-13', 2, 6, 5, NULL, NULL, 'planned');
 
 --
 -- Индексы сохранённых таблиц
@@ -589,25 +747,25 @@ ALTER TABLE `Waybills`
 -- AUTO_INCREMENT для таблицы `Clients`
 --
 ALTER TABLE `Clients`
-  MODIFY `client_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `client_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `Contracts`
 --
 ALTER TABLE `Contracts`
-  MODIFY `contract_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `contract_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `DeliveryRoutes`
 --
 ALTER TABLE `DeliveryRoutes`
-  MODIFY `route_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `route_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `DeliveryVehicles`
 --
 ALTER TABLE `DeliveryVehicles`
-  MODIFY `vehicle_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `vehicle_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `IngredientConsumptionItems`
@@ -631,85 +789,85 @@ ALTER TABLE `IngredientPurchaseRequests`
 -- AUTO_INCREMENT для таблицы `IngredientReceiptItems`
 --
 ALTER TABLE `IngredientReceiptItems`
-  MODIFY `receipt_item_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `receipt_item_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `IngredientReceipts`
 --
 ALTER TABLE `IngredientReceipts`
-  MODIFY `receipt_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `receipt_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `Ingredients`
 --
 ALTER TABLE `Ingredients`
-  MODIFY `ingredient_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ingredient_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `IngredientStockLog`
 --
 ALTER TABLE `IngredientStockLog`
-  MODIFY `log_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `log_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `OrderItems`
 --
 ALTER TABLE `OrderItems`
-  MODIFY `order_item_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `order_item_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `Orders`
 --
 ALTER TABLE `Orders`
-  MODIFY `order_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `ProductCategories`
 --
 ALTER TABLE `ProductCategories`
-  MODIFY `category_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `ProductionTaskItems`
 --
 ALTER TABLE `ProductionTaskItems`
-  MODIFY `task_item_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `task_item_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `ProductionTasks`
 --
 ALTER TABLE `ProductionTasks`
-  MODIFY `task_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `task_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `Products`
 --
 ALTER TABLE `Products`
-  MODIFY `product_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `Recipes`
 --
 ALTER TABLE `Recipes`
-  MODIFY `recipe_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `recipe_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `WaybillItems`
 --
 ALTER TABLE `WaybillItems`
-  MODIFY `waybill_item_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `waybill_item_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `Waybills`
 --
 ALTER TABLE `Waybills`
-  MODIFY `waybill_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `waybill_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
