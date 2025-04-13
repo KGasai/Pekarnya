@@ -46,7 +46,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Наименование заказчика</th>
-                                <th>Адрес</th>
+                                <th>Дата</th>
                                 <th>Наименование продукции</th>
                                 <th>Ед. измер.</th>
                                 <th>Заказано</th>
@@ -57,7 +57,7 @@
                             <?php foreach ($orders as $order): ?>
                             <tr>
                                 <td><?= htmlspecialchars($order['client_name']) ?></td>
-                                <td><?= htmlspecialchars($order['address']) ?></td>
+                                <td><?= htmlspecialchars($order['order_date']) ?></td>
                                 <td><?= htmlspecialchars($order['product_name']) ?></td>
                                 <td><?= htmlspecialchars($order['unit_of_measure']) ?></td>
                                 <td class="text-right"><?= number_format($order['quantity'], 3, ',', ' ') ?></td>

@@ -63,8 +63,7 @@ class Director extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
-    // Заявки клиента
-
+    // Заявки клиентов
     public function client_orders($start_date = null, $end_date = null) {
         $this->load->model('Order_model');
         $this->load->model('Client_model');
@@ -79,16 +78,12 @@ class Director extends CI_Controller {
         $data['client_orders'] = [];
 
         foreach ($clients as $client) {
-            $orders = $this->Order_model->get_client_orders($user_id, $start_date, $end_date);
-            $contracts = $this->Contract_model->get_client_contracts($user_id);
-            
+            $orders = $this->Order_model->get_client_orders($client['user_id'], $start_date, $end_date);
             $data['client_orders'][] = [
                 'client' => $client,
                 'orders' => $orders,
-                'contracts' => $contracts
             ];
         }
-        
         $data['start_date'] = $start_date?? date('Y-m-d');
         $data['end_date'] = $end_date ?? date('Y-m-d', strtotime('+1 day')); 
     

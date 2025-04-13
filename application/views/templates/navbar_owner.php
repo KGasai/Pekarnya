@@ -22,9 +22,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="Director/client_orders">Заявки клиентов  </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Director/demand_analysis">Спрос продукции  </a>
-                </li>
             </ul>
 
             <ul class="navbar-nav me-4 ms-auto mb-2 mb-lg-0">

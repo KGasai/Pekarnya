@@ -1,0 +1,4 @@
+Имя: a1114127_bakery_management
+Пользователь: a1114127_bakery_management
+Пароль: qreWnNyG
+Адрес хоста: localhost

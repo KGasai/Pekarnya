@@ -16,7 +16,7 @@ class Expeditor extends CI_Controller {
         $this->load->model('Order_model');
         $date = $date ?? date('Y-m-d');
         
-        $data['orders'] = $this->Order_model->get_orders_for_delivery($date);
+        $data['orders'] = $this->Order_model->get_orders_for_delivery();
         $data['vehicles'] = $this->Vehicle_model->get_active_vehicles();
         $data['drivers'] = $this->User_model->get_users_by_role('driver');
         $data['date'] = $date;
@@ -88,6 +88,7 @@ class Expeditor extends CI_Controller {
         return $prefix . str_pad($next_number, 4, '0', STR_PAD_LEFT);
     }
 
+// Генерация номера путевого листа
     public function search_waybills() {
         $this->load->model('Delivery_model');
         

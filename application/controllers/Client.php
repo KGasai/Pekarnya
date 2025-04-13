@@ -86,6 +86,7 @@ class Client extends CI_Controller
     {
         if (isset($_POST)) {
             $this->load->model('Client_model');
+            $_POST['user_id'] = $this->session->userdata('user_id');
             $this->Client_model->add_clientTableClients($_POST);
             redirect('Client/index');
         }
