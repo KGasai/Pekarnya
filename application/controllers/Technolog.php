@@ -56,71 +56,71 @@ class Technolog extends CI_Controller {
 	}
 
 	// AJAX метод для получения рецепта
-public function get_recipe($product_id) {
-    $this->load->model('Recipe_model');
-    $recipe = $this->Recipe_model->get_recipe_by_product($product_id);
-    echo json_encode($recipe);
-}
-
-// AJAX метод для добавления ингредиента
-public function add_ingredient() {
-    $this->load->model('Recipe_model');
-    
-    $product_id = $this->input->post('product_id');
-    $ingredient_id = $this->input->post('ingredient_id');
-    $quantity = $this->input->post('quantity');
-    
-    $result = $this->Recipe_model->add_ingredient_to_recipe($product_id, $ingredient_id, $quantity);
-    
-    echo json_encode(['success' => $result]);
-}
-
-public function add_product(){
-	
-	$this->load->model('Product_model');
-	$result = $this->Product_model->add_product($_POST);
-    
-    echo json_encode(['success' => $result]);
-
-}
-
-public function remove_ingredient($recipe_id) {
-    $this->load->model('Recipe_model');
-    $result = $this->Recipe_model->remove_ingredient_from_recipe($recipe_id);
-    
-    echo json_encode(['success' => $result]);
-}
-	public function calculation(){
-		$this->load->model('Product_model');
-		$this->load->model('Ingredient_model');
-
-		$data['products'] = $this->Product_model->get_active_products();
-		$data['ingredients'] = $this->Ingredient_model->get_active_ingredients();
-
-		$this->load->view('templates/head.php');
-		
-		$this->load->view('templates/navbar_technologist.php');
-		
-
-		$this->load->view('technolog/view_calculation.php', $data);
-		$this->load->view('templates/footer.php');
+	public function get_recipe($product_id) {
+		$this->load->model('Recipe_model');
+		$recipe = $this->Recipe_model->get_recipe_by_product($product_id);
+		echo json_encode($recipe);
 	}
 
-	// AJAX метод для расчета
-public function calculate_requirements() {
-    $this->load->model('Recipe_model');
-    
-    $products = $this->input->post('products');
-    
-    // Преобразуем JSON строку в массив, если нужно
-    if (is_string($products)) {
-        $products = json_decode($products, true);
-    }
-    
-    $result = $this->Recipe_model->calculate_daily_ingredients($products);
-    
-    echo json_encode($result);
-}
+// AJAX метод для добавления ингредиента
+	public function add_ingredient() {
+		$this->load->model('Recipe_model');
+		
+		$product_id = $this->input->post('product_id');
+		$ingredient_id = $this->input->post('ingredient_id');
+		$quantity = $this->input->post('quantity');
+		
+		$result = $this->Recipe_model->add_ingredient_to_recipe($product_id, $ingredient_id, $quantity);
+		
+		echo json_encode(['success' => $result]);
+	}
+
+	public function add_product(){
+		
+		$this->load->model('Product_model');
+		$result = $this->Product_model->add_product($_POST);
+		
+		echo json_encode(['success' => $result]);
+
+	}
+
+	public function remove_ingredient($recipe_id) {
+		$this->load->model('Recipe_model');
+		$result = $this->Recipe_model->remove_ingredient_from_recipe($recipe_id);
+		
+		echo json_encode(['success' => $result]);
+	}
+		public function calculation(){
+			$this->load->model('Product_model');
+			$this->load->model('Ingredient_model');
+
+			$data['products'] = $this->Product_model->get_active_products();
+			$data['ingredients'] = $this->Ingredient_model->get_active_ingredients();
+
+			$this->load->view('templates/head.php');
+			
+			$this->load->view('templates/navbar_technologist.php');
+			
+
+			$this->load->view('technolog/view_calculation.php', $data);
+			$this->load->view('templates/footer.php');
+		}
+
+		// AJAX метод для расчета
+	public function calculate_requirements() {
+		$this->load->model('Recipe_model');
+		
+		$products = $this->input->post('products');
+		
+		// Преобразуем JSON строку в массив, если нужно
+		if (is_string($products)) {
+			$products = json_decode($products, true);
+		}
+		
+		$result = $this->Recipe_model->calculate_daily_ingredients($products);
+		
+		echo json_encode($result);
+	}
 
 	public function create_task() {
 		
@@ -133,19 +133,12 @@ public function calculate_requirements() {
 			$products = json_decode($products, true);
 		}
 
-		
-		
-		
-
 		$this->load->model('Production_model');
 		
 		$new_products = [];
 		foreach($products as $product){
 			$new_products[$product['product_id']] = $product['quantity'];
 		}
-			
-		
-		
 
 		$task_id = $this->Production_model->create_task($date, $created_by, $new_products);
 		
