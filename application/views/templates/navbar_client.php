@@ -16,6 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="Client/contracts">Договоры</a>
                 </li>   
+                <li class="nav-item">
+                    <a class="nav-link" href="Client/cabinnet">Личный кабинет</a>
+                </li>  
             </ul>
 
             <ul class="navbar-nav me-4 ms-auto mb-2 mb-lg-0">

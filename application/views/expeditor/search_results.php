@@ -25,7 +25,6 @@
                                 <th>Автомобиль</th>
                                 <th>Водитель</th>
                                 <th>Статус</th>
-                                <th>Действия</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,19 +35,13 @@
                                 <td><?= $waybill['vehicle_id'] ?></td>
                                 <td><?= $waybill['driver_id'] ?></td>
                                 <td>
-                                    <span class="badge badge-<?= 
+                                    <span <?= 
                                         $waybill['status'] == 'completed' ? 'success' : 
                                         ($waybill['status'] == 'in_progress' ? 'warning' : 'primary') 
                                     ?>">
                                         <?= $waybill['status'] == 'completed' ? 'Завершен' : 
                                            ($waybill['status'] == 'in_progress' ? 'В процессе' : 'Запланирован') ?>
                                     </span>
-                                </td>
-                                <td>
-                                    <a href="<?= site_url('expeditor/view_waybill/' . $waybill['waybill_id']) ?>" 
-                                       class="btn btn-sm btn-info" title="Просмотр">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

@@ -68,9 +68,28 @@ class Client extends CI_Controller
         $this->load->view('templates/head.php');
         $this->load->view('templates/navbar_client.php');
 
-        $data['orders'] = $this -> order_model->get_order_Client($client_id);
+        $data['orders'] = $this->order_model->get_order_Client($client_id);
         $this->load->view('clients/view_order.php', $data);
         $this->load->view('templates/footer.php');
+    }
+
+
+    public function cabinnet()
+    {
+        $this->load->view('templates/head.php');
+        $this->load->view('templates/navbar_client.php');
+        $this->load->view('clients/view_cabinet.php');
+        $this->load->view('templates/footer.php');
+    }
+
+    public function editData()
+    {
+        if (isset($_POST)) {
+            $this->load->model('Client_model');
+            $_POST['user_id'] = $this->session->userdata('user_id');
+            $this->Client_model->add_clientTableClients($_POST);
+            redirect('Client/index');
+        }
     }
 
 }

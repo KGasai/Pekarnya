@@ -20,7 +20,7 @@ class Contract_model extends CI_Model {
 
     // Получение договоров клиента
     public function get_client_contracts($client_id) {
-        $this->db->where('client_id', $client_id);
+        $this->db->where('client_id', $client_id); 
         return $this->db->get('Contracts')->result_array();
     }
 

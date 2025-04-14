@@ -43,9 +43,8 @@ class Order_model extends CI_Model
     }
 
     // Получение заказов для доставки на дату
-    public function get_orders_for_delivery($date)
+    public function get_orders_for_delivery()
     {
-        $this->db->where('order_date', $date);
         $this->db->where('Orders.status', 'completed');
         $this->db->join('OrderItems', 'OrderItems.order_id = Orders.order_id');
         $this->db->join('Products', 'Products.product_id = OrderItems.product_id');
@@ -59,13 +58,10 @@ class Order_model extends CI_Model
     // Получение заказов клиента за период
     public function get_client_orders($client_id, $start_date, $end_date)
 {
-    $query = "SELECT * FROM Orders, Contracts 
-              WHERE Orders.client_id = ?
-              AND Orders.order_date >= ?
-              AND Orders.order_date <= ?
-              AND Orders.client_id = Contracts.client_id";
+    $query = "SELECT * FROM Orders
+              WHERE Orders.client_id = ?";
     
-    return $this->db->query($query, [$client_id, $start_date, $end_date])->result_array();
+    return $this->db->query($query, [$client_id])->result_array();
 }
 
     // Обновление статуса заказа
