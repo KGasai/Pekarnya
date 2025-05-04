@@ -7,11 +7,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-4 me-auto mb-lg-0">
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="Main/index">Главная</a>
+                 <li class="nav-item">
+                    <a class="nav-link" href="Technolog/index">Главная</a>
                 </li>
-                Пишешь страниы
-                -->
+                <li class="nav-item">
+                    <a class="nav-link" href="Technolog/tasks">Производственные задания</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Technolog/recipes">Рецептуры</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Technolog/calculation">Расчет сырья</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Technolog/orders">Заказы клиентов</a>
+                </li>        
             </ul>
 
             <ul class="navbar-nav me-4 ms-auto mb-2 mb-lg-0">

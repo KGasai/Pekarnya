@@ -8,22 +8,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-4 me-auto mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="Owner/priceList">Прайс лист</a>
+                    <a class="nav-link" href="Director/price_list">Прайс лист</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Owner/listClients">Список клиентов</a>
+                    <a class="nav-link" href="Director/clients">Список клиентов</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Owner/printingMaterialCosts">Печать расходов сырья </a>
+                    <a class="nav-link" href="Director/ingredient_consumption">Печать расходов сырья </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Owner/otchets">Отчеты  </a>
+                    <a class="nav-link" href="Director/production_report">Отчеты  </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Owner/applecationsOfClients">Заявки клиентов  </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Owner/productDemand">Спрос продукции  </a>
+                    <a class="nav-link" href="Director/client_orders">Заявки клиентов  </a>
                 </li>
             </ul>
 
